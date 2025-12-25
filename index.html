@@ -276,10 +276,10 @@
       const neptuneData = showResult && neptuneSign ? getReading('海王星', neptuneSign) : null;
       const plutoData = showResult && plutoSign ? getReading('冥王星', plutoSign) : null;
 
-      const renderPlanetCard = (data, sign, planetName, color) => {
+      const renderPlanetCard = (data, sign, planetName, color, planetId) => {
         if (!data) return null;
         return (
-          <div className="planet-card" style={{background: 'white', borderRadius: '1.5rem', padding: '1.5rem', marginBottom: '1.5rem', border: '4px solid ' + color}}>
+          <div id={planetId} style={{background: 'white', borderRadius: '1.5rem', padding: '1.5rem', marginBottom: '1.5rem', border: '4px solid ' + color}}>
             <h3 style={{fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem'}}>
               {planetName}：{data.theme} - {sign}
             </h3>
@@ -292,6 +292,23 @@
             <div style={{marginBottom: '0.5rem'}}><strong>活かし方：</strong>{data.development}</div>
             <div style={{marginBottom: '0.5rem'}}><strong>実践的方法：</strong>{data.practical}</div>
             <p style={{marginTop: '1rem', fontWeight: '500', padding: '1rem', background: '#fef3c7', borderRadius: '0.5rem'}}><strong>総合評価：</strong>{data.summary}</p>
+            
+            <button 
+              onClick={() => handleSaveImage(planetId, planetName + '_' + sign)}
+              style={{
+                marginTop: '1rem',
+                padding: '0.75rem 1.5rem',
+                background: 'linear-gradient(to right, #a855f7, #ec4899)',
+                color: 'white',
+                border: 'none',
+                borderRadius: '0.5rem',
+                cursor: 'pointer',
+                fontWeight: '600',
+                fontSize: '1rem'
+              }}
+            >
+              📸 この結果を画像で保存
+            </button>
           </div>
         );
       };
