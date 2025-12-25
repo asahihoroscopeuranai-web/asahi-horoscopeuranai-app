@@ -8,11 +8,12 @@
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
   <div id="root"></div>
   <script type="text/babel">
-    const { useState } = React;
+    const { useState, useRef } = React;
 
     function HoroscopeApp() {
       const [sunSign, setSunSign] = useState('');
@@ -234,15 +235,29 @@
           summary: '乙女座の冥王星世代は、実務的な分野での根本的変革を推進します。分析力と改革の力が、あなたの世代の特徴です。'
         }
       };
-
+        const handleSaveImage = async (elementId, planetName) => {
+        const element = document.getElementById(elementId);
+        if (!element) return;
+        
+        try {
+          const canvas = await html2canvas(element, {
+            backgroundColor: '#ffffff',
+            scale: 2,
+            logging: false
+          });
+          
+          const link = document.createElement('a');
+          link.download = `${planetName}_${new Date().getTime()}.png`;
+          link.href = canvas.toDataURL();
+          link.click();
+        } catch (error) {
+          alert('画像の保存に失敗しました');
+        }
+      };
       const handleSubmit = () => {
         if (sunSign || moonSign || mercurySign || venusSign || marsSign || jupiterSign || saturnSign || uranusSign || neptuneSign || plutoSign) {
           setShowResult(true);
         }
-      };
-
-      const handlePrint = () => {
-        window.print();
       };
 
       const getReading = (planet, sign) => {
@@ -341,26 +356,21 @@
               </div>
             ) : (
               <div>
-                {renderPlanetCard(sunData, sunSign, '太陽', '#fed7aa')}
-                {renderPlanetCard(moonData, moonSign, '月', '#bfdbfe')}
-                {renderPlanetCard(mercuryData, mercurySign, '水星', '#bbf7d0')}
-                {renderPlanetCard(venusData, venusSign, '金星', '#fbcfe8')}
-                {renderPlanetCard(marsData, marsSign, '火星', '#fecaca')}
-                {renderPlanetCard(jupiterData, jupiterSign, '木星', '#fed7aa')}
-                {renderPlanetCard(saturnData, saturnSign, '土星', '#e0e7ff')}
-                {renderPlanetCard(uranusData, uranusSign, '天王星', '#dbeafe')}
-                {renderPlanetCard(neptuneData, neptuneSign, '海王星', '#bfdbfe')}
-                {renderPlanetCard(plutoData, plutoSign, '冥王星', '#e9d5ff')}
+                {renderPlanetCard(sunData, sunSign, '太陽', '#fed7aa', 'sun-card')}
+                {renderPlanetCard(moonData, moonSign, '月', '#bfdbfe', 'moon-card')}
+                {renderPlanetCard(mercuryData, mercurySign, '水星', '#bbf7d0', 'mercury-card')}
+                {renderPlanetCard(venusData, venusSign, '金星', '#fbcfe8', 'venus-card')}
+                {renderPlanetCard(marsData, marsSign, '火星', '#fecaca', 'mars-card')}
+                {renderPlanetCard(jupiterData, jupiterSign, '木星', '#fed7aa', 'jupiter-card')}
+                {renderPlanetCard(saturnData, saturnSign, '土星', '#e0e7ff', 'saturn-card')}
+                {renderPlanetCard(uranusData, uranusSign, '天王星', '#dbeafe', 'uranus-card')}
+                {renderPlanetCard(neptuneData, neptuneSign, '海王星', '#bfdbfe', 'neptune-card')}
+                {renderPlanetCard(plutoData, plutoSign, '冥王星', '#e9d5ff', 'pluto-card')}
 
                 <button onClick={() => setShowResult(false)} className="no-print" style={{width: '100%', background: 'linear-gradient(to right, #a855f7, #f472b6)', color: 'white', fontSize: '1.25rem', fontWeight: 'bold', padding: '1rem', borderRadius: '0.75rem', border: 'none', cursor: 'pointer', marginBottom: '1rem'}}>
                   🔄 もう一度占う
                 </button>
-
-                <div style={{textAlign: 'center', marginTop: '1rem'}} className="no-print">
-                  <button onClick={handlePrint} style={{color: '#7e22ce', fontSize: '1.125rem', fontWeight: '600', textDecoration: 'underline', background: 'none', border: 'none', cursor: 'pointer'}}>
-                    占い結果を印刷する
-                  </button>
-                </div>
+                
               </div>
             )}
           </div>
