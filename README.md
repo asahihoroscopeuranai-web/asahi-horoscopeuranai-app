@@ -1,1 +1,1 @@
-# asahi-horoscopeuranai-app
+# horoscopeuranai-app
