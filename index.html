@@ -278,20 +278,137 @@
 
       const renderPlanetCard = (data, sign, planetName, color, planetId) => {
         if (!data) return null;
+        
+        // アイコンのSVGコンポーネント
+        const StarIcon = () => (
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{display: 'inline-block', verticalAlign: 'middle'}}>
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+          </svg>
+        );
+        
+        const HeartIcon = () => (
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{display: 'inline-block', verticalAlign: 'middle'}}>
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+        );
+        
+        const ThumbsDownIcon = () => (
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{display: 'inline-block', verticalAlign: 'middle'}}>
+            <path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path>
+          </svg>
+        );
+        
+        const AlertIcon = () => (
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{display: 'inline-block', verticalAlign: 'middle'}}>
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+        );
+        
+        const BriefcaseIcon = () => (
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{display: 'inline-block', verticalAlign: 'middle'}}>
+            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+          </svg>
+        );
+        
+        const TrendingIcon = () => (
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{display: 'inline-block', verticalAlign: 'middle'}}>
+            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+            <polyline points="17 6 23 6 23 12"></polyline>
+          </svg>
+        );
+        
+        const CheckIcon = () => (
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{display: 'inline-block', verticalAlign: 'middle'}}>
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+        );
+        
+        const AwardIcon = () => (
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{display: 'inline-block', verticalAlign: 'middle'}}>
+            <circle cx="12" cy="8" r="7"></circle>
+            <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+          </svg>
+        );
+        
         return (
           <div id={planetId} style={{background: 'white', borderRadius: '1.5rem', padding: '1.5rem', marginBottom: '1.5rem', border: '4px solid ' + color}}>
             <h3 style={{fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem'}}>
               {planetName}：{data.theme} - {sign}
             </h3>
-            <p style={{fontWeight: 'bold', marginBottom: '1rem'}}>{data.description}</p>
-            <div style={{marginBottom: '0.5rem'}}><strong>特徴：</strong>{data.traits}</div>
-            <div style={{marginBottom: '0.5rem'}}><strong>好み：</strong>{data.likes}</div>
-            <div style={{marginBottom: '0.5rem'}}><strong>苦手：</strong>{data.dislikes}</div>
-            <div style={{marginBottom: '0.5rem'}}><strong>課題：</strong>{data.challenges}</div>
-            <div style={{marginBottom: '0.5rem'}}><strong>向いていること：</strong>{data.suitable.split('｜').map((item, i) => <div key={i}>• {item}</div>)}</div>
-            <div style={{marginBottom: '0.5rem'}}><strong>活かし方：</strong>{data.development}</div>
-            <div style={{marginBottom: '0.5rem'}}><strong>実践的方法：</strong>{data.practical}</div>
-            <p style={{marginTop: '1rem', fontWeight: '500', padding: '1rem', background: '#fef3c7', borderRadius: '0.5rem'}}><strong>総合評価：</strong>{data.summary}</p>
+            
+            <div style={{marginBottom: '1rem', padding: '1rem', background: 'linear-gradient(to right, #fef3c7, #fed7aa)', borderRadius: '1rem'}}>
+              <p style={{fontWeight: 'bold'}}>{data.description}</p>
+            </div>
+
+            <div style={{marginBottom: '1rem', padding: '1rem', background: 'linear-gradient(to right, #fef9c3, #fef08a)', borderRadius: '1rem'}}>
+              <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem', color: '#f59e0b'}}>
+                <StarIcon />
+                <strong style={{fontSize: '1.125rem', color: '#78350f'}}>特徴</strong>
+              </div>
+              <div style={{color: '#1f2937'}}>{data.traits}</div>
+            </div>
+
+            <div style={{marginBottom: '1rem', padding: '1rem', background: 'linear-gradient(to right, #dcfce7, #bbf7d0)', borderRadius: '1rem'}}>
+              <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem', color: '#ec4899'}}>
+                <HeartIcon />
+                <strong style={{fontSize: '1.125rem', color: '#166534'}}>好み</strong>
+              </div>
+              <div style={{color: '#1f2937'}}>{data.likes}</div>
+            </div>
+
+            <div style={{marginBottom: '1rem', padding: '1rem', background: 'linear-gradient(to right, #fecdd3, #fda4af)', borderRadius: '1rem'}}>
+              <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem', color: '#ef4444'}}>
+                <ThumbsDownIcon />
+                <strong style={{fontSize: '1.125rem', color: '#991b1b'}}>苦手</strong>
+              </div>
+              <div style={{color: '#1f2937'}}>{data.dislikes}</div>
+            </div>
+
+            <div style={{marginBottom: '1rem', padding: '1rem', background: 'linear-gradient(to right, #fed7aa, #fdba74)', borderRadius: '1rem'}}>
+              <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem', color: '#f97316'}}>
+                <AlertIcon />
+                <strong style={{fontSize: '1.125rem', color: '#9a3412'}}>課題</strong>
+              </div>
+              <div style={{color: '#1f2937'}}>{data.challenges}</div>
+            </div>
+
+            <div style={{marginBottom: '1rem', padding: '1rem', background: 'linear-gradient(to right, #dbeafe, #bfdbfe)', borderRadius: '1rem'}}>
+              <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem', color: '#3b82f6'}}>
+                <BriefcaseIcon />
+                <strong style={{fontSize: '1.125rem', color: '#1e3a8a'}}>向いていること</strong>
+              </div>
+              <div style={{color: '#1f2937'}}>
+                {data.suitable.split('｜').map((item, i) => <div key={i} style={{marginBottom: '0.25rem'}}>• {item}</div>)}
+              </div>
+            </div>
+
+            <div style={{marginBottom: '1rem', padding: '1rem', background: 'linear-gradient(to right, #e9d5ff, #d8b4fe)', borderRadius: '1rem'}}>
+              <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem', color: '#a855f7'}}>
+                <TrendingIcon />
+                <strong style={{fontSize: '1.125rem', color: '#6b21a8'}}>活かし方・発展方法</strong>
+              </div>
+              <div style={{color: '#1f2937'}}>{data.development}</div>
+            </div>
+
+            <div style={{marginBottom: '1rem', padding: '1rem', background: 'linear-gradient(to right, #ccfbf1, #99f6e4)', borderRadius: '1rem'}}>
+              <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem', color: '#14b8a6'}}>
+                <CheckIcon />
+                <strong style={{fontSize: '1.125rem', color: '#134e4a'}}>実践的方法</strong>
+              </div>
+              <div style={{color: '#1f2937'}}>{data.practical}</div>
+            </div>
+
+            <div style={{padding: '1rem', background: 'linear-gradient(to right, #fef3c7, #fde68a)', borderRadius: '1rem', border: '2px solid #f59e0b'}}>
+              <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem', color: '#f59e0b'}}>
+                <AwardIcon />
+                <strong style={{fontSize: '1.125rem', color: '#78350f'}}>総合評価</strong>
+              </div>
+              <div style={{color: '#1f2937', fontWeight: '500'}}>{data.summary}</div>
+            </div>
             
             <div style={{textAlign: 'center', marginTop: '1.5rem'}}>
               <button 
